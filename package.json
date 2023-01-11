@@ -1,0 +1,28 @@
+{
+  "name": "@villagekit/gridjig-fold",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/villagekit/gridjig-fold.git"
+  },
+  "keywords": [],
+  "author": "Village Kit Limited",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/villagekit/gridjig-fold/issues"
+  },
+  "homepage": "https://github.com/villagekit/gridjig-fold#readme",
+  "dependencies": {
+    "@tarikjabiri/dxf": "^2.6.2"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.3.1",
+    "jest": "^29.3.1",
+    "ts-jest": "^29.0.3",
+    "ts-node": "^10.9.1"
+  }
+}
