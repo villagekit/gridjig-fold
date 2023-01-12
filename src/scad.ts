@@ -12,7 +12,7 @@ export function main() {
   return createInnerFoldScad(innerFoldDesignOptions)
 }
 
-export function createInnerFoldScad(options: InnerFoldDesignOptions): Geom3 {
+export function createInnerFoldScad(options: InnerFoldDesignOptions) {
   const {
     gridUnitInMm,
     holeDiameterInMm,
@@ -167,38 +167,24 @@ export function createInnerFoldScad(options: InnerFoldDesignOptions): Geom3 {
     const insideArc = primitives.arc({
       radius: insideRadius,
       startAngle: 0,
-      endAngle: 90,
+      endAngle: (1/4) * ROT,
     })
 
     const outsideArc = primitives.arc({
       radius: insideRadius + materialThickness,
       startAngle: 0,
-      endAngle: 90,
+      endAngle: (1/4) * ROT,
     })
 
-    /*
     const profile = geometries.path2.fromPoints(
       {
         closed: true,
       },
       [
-        ...insideArc.points.map(maths.vec2.clone),
-        ...outsideArc.points.map(maths.vec2.clone).reverse(),
+        ...insideArc.points.map(maths.vec2.clone).reverse(),
+        ...outsideArc.points.map(maths.vec2.clone),
       ],
     )
-    */
-
-    /*
-    const profile = geometries.geom2.fromPoints(
-      [
-        ...insideArc.points.map(maths.vec2.clone),
-        ...outsideArc.points.map(maths.vec2.clone).reverse(),
-        maths.vec2.clone(insideArc.points[0])
-      ],
-    )
-    */
-
-    const profile = hulls.hull(insideArc, outsideArc)
 
     const solid = extrusions.extrudeLinear(
       {
