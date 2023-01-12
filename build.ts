@@ -39,6 +39,10 @@ writeFile(dxfPath, dxfString)
 
 const helper = new DxfHelper(dxfString)
 const svgString = helper.toSVG()
+  .replace(
+    'width="100%" height="100%"',
+    'width="100%" height="100%" style="background-color: white;"',
+  )
 const svgPath = './build.svg'
 
 writeFile(svgPath, svgString)
