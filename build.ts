@@ -1,4 +1,6 @@
 import { writeFile } from 'fs/promises'
+// @ts-ignore
+import { Helper as DxfHelper } from 'dxf'
 
 import { createInnerFoldDesign, GridOptions, FoldOptions } from './src'
 
@@ -30,7 +32,14 @@ const dxf = createInnerFoldDesign({
   mountingHoleDiameterInMm: 8,
 })
 
-const string = dxf.stringify()
-const path = './build.dxf'
+const dxfString = dxf.stringify()
+const dxfPath = './build.dxf'
 
-writeFile(path, string)
+writeFile(dxfPath, dxfString)
+
+const helper = new DxfHelper(dxfString)
+const svgString = helper.toSVG()
+const svgPath = './build.svg'
+
+writeFile(svgPath, svgString)
+

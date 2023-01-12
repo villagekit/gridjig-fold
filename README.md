@@ -2,4 +2,4 @@
 
 - [`build.dxf`](./build.dxf)
 
-![](./build.png)
+![](./build.svg)
