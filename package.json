@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^29.3.1",
+    "@scalenc/stl-to-png": "^1.0.3",
     "jest": "^29.3.1",
     "jscad-now": "github:ahdinosaur/jscad-now#typescript",
     "ts-jest": "^29.0.3",

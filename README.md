@@ -1,6 +1,9 @@
 # gridjig-fold
 
-- [`build.dxf`](./build.dxf)
 - [`build.stl`](./build.stl)
 
-![](./build.svg)
+![](./build.stl.png)
+
+- [`build.dxf`](./build.dxf)
+
+![](./build.dxf.svg)
