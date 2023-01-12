@@ -8,12 +8,19 @@ function createBaseDesign() {
   dxf.setUnits(Units.Millimeters)
 
   dxf.addLType('Bends', '__ . ', [2, -1, 0, -1])
+  dxf.addLType('Faces', '. ', [0, -1])
 
   const layers = {
     edges: dxf.addLayer(
       'Edges',
       Colors.White,
       'Continuous'
+    ),
+
+    faces: dxf.addLayer(
+      'Faces',
+      Colors.Magenta,
+      'Faces'
     ),
 
     bendUp: dxf.addLayer(
@@ -34,7 +41,6 @@ function createBaseDesign() {
 
 export interface GridOptions {
   gridUnitInMm: number
-  lengthInGridUnits: number
   holeDiameterInMm: number
 }
 
@@ -44,16 +50,22 @@ export interface FoldOptions {
   kFactor: number
 }
 
-export interface InnerFoldDesignOptions extends GridOptions, FoldOptions {}
+export interface InnerFoldDesignOptions extends GridOptions, FoldOptions {
+  lengthInGridUnits: number
+  widthInMm: number
+  heightInMm: number
+}
 
 export function createInnerFoldDesign(options: InnerFoldDesignOptions): DxfWriter {
   const {
     gridUnitInMm,
-    lengthInGridUnits,
     holeDiameterInMm,
     materialThickness,
     insideRadius,
     kFactor,
+    lengthInGridUnits,
+    widthInMm,
+    heightInMm,
   } = options
 
   const bendAllowance = getBendAllowance({
@@ -72,37 +84,100 @@ export function createInnerFoldDesign(options: InnerFoldDesignOptions): DxfWrite
   })
   console.log('bend deduction', bendDeduction)
 
-  const length = lengthInGridUnits * gridUnitInMm
-  const width = 2 * gridUnitInMm - bendDeduction
+  const sheetLength = lengthInGridUnits * gridUnitInMm
+  const sheetWidth = widthInMm + heightInMm - bendDeduction
 
-  console.log('length', length)
-  console.log('width', width)
+  console.log('length', sheetLength)
+  console.log('width', sheetWidth)
 
   const { dxf, layers } = createBaseDesign()
 
   dxf.setCurrentLayerName('Edges')
 
   createRoundedSquare({
-    start: [0, 0],
-    size: [length, width],
+    size: [sheetLength, sheetWidth],
     radius: 2,
     dxf,
   })
 
+  const numMountingHoles = 4
+  const mountingHoleDiameterInMm = 5
+  for (let holeIndex = 0; holeIndex < numMountingHoles - 1; holeIndex++) {
+    dxf.addCircle(
+      point3d(
+        widthInMm + holeIndex * (sheetLength / (numMountingHoles - 1)),
+        (1/2) * widthInMm,
+      ),
+      (1/2) * mountingHoleDiameterInMm,
+    )
+  }
+  dxf.addCircle(
+    point3d(
+      sheetLength - widthInMm,
+      (1/2) * widthInMm,
+    ),
+    (1/2) * mountingHoleDiameterInMm,
+  )
+
+  for (let holeIndex = 0; holeIndex < lengthInGridUnits; holeIndex++) {
+    createGridHole({
+      start: [0, sheetWidth - heightInMm],
+      gridUnitInMm,
+      holeDiameterInMm,
+      holeIndex,
+      dxf,
+    })
+  }
+
+  dxf.setCurrentLayerName('Faces')
+
+  dxf.addLine(
+    point3d(
+      0,
+      widthInMm - (1/2) * bendAllowance
+    ),
+    point3d(
+      sheetLength,
+      widthInMm - (1/2) * bendAllowance
+    ),
+  )
+
+  dxf.addLine(
+    point3d(
+      0,
+      widthInMm + (1/2) * bendAllowance
+    ),
+    point3d(
+      sheetLength,
+      widthInMm + (1/2) * bendAllowance
+    ),
+  )
+
   dxf.setCurrentLayerName('Bend_Up')
+
+  dxf.addLine(
+    point3d(
+      0,
+      widthInMm
+    ),
+    point3d(
+      sheetLength,
+      widthInMm
+    ),
+  )
   
   return dxf
 }
 
 interface RoundedSquareOptions {
-  start: [number, number]
+  start?: [number, number]
   size: [number, number]
   radius: number
   dxf: DxfWriter
 }
 function createRoundedSquare(options: RoundedSquareOptions) {
   const {
-    start,
+    start = [0, 0],
     size,
     radius,
     dxf,
@@ -167,5 +242,29 @@ function createRoundedSquare(options: RoundedSquareOptions) {
     radius,
     180,
     270,
+  )
+}
+
+interface GridHoleOptions extends GridOptions {
+  start?: [number, number]
+  holeIndex: number
+  dxf: DxfWriter
+}
+
+function createGridHole(options: GridHoleOptions) {
+  const {
+    gridUnitInMm,
+    holeDiameterInMm,
+    start = [0, 0],
+    holeIndex,
+    dxf
+  } = options
+
+  dxf.addCircle(
+    point3d(
+      start[0] + ((1/2) + holeIndex) * gridUnitInMm,
+      start[1] + (1/2) * gridUnitInMm,
+    ),
+    (1/2) * holeDiameterInMm,
   )
 }

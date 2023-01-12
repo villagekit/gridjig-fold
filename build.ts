@@ -4,7 +4,6 @@ import { createInnerFoldDesign, GridOptions, FoldOptions } from './src'
 
 const gridOptions: GridOptions = {
   gridUnitInMm: 40,
-  lengthInGridUnits: 20,
   holeDiameterInMm: 8,
 }
 
@@ -24,6 +23,9 @@ const foldOptions: FoldOptions = {
 const dxf = createInnerFoldDesign({
   ...gridOptions,
   ...foldOptions,
+  lengthInGridUnits: 20,
+  widthInMm: 20,
+  heightInMm: 40,
 })
 
 const string = dxf.stringify()
