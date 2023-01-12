@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/villagekit/gridjig-fold#readme",
   "dependencies": {
+    "@jscad/modeling": "^2.11.0",
+    "@jscad/stl-serializer": "^2.1.13",
     "@tarikjabiri/dxf": "^2.6.2",
     "dxf": "^5.0.0"
   },

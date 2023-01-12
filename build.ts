@@ -1,8 +1,10 @@
 import { writeFile } from 'fs/promises'
 // @ts-ignore
 import { Helper as DxfHelper } from 'dxf'
+// @ts-ignore
+import stl from '@jscad/stl-serializer'
 
-import { createInnerFoldDesign, GridOptions, FoldOptions } from './src'
+import { createInnerFoldScad, createInnerFoldDxf, GridOptions, FoldOptions } from './src'
 
 const gridOptions: GridOptions = {
   gridUnitInMm: 40,
@@ -22,7 +24,7 @@ const foldOptions: FoldOptions = {
 //
 // NOTE (mw): why does this not match what we calculate?
 
-const dxf = createInnerFoldDesign({
+const innerFoldDesignOptions = {
   ...gridOptions,
   ...foldOptions,
   lengthInGridUnits: 20,
@@ -30,11 +32,11 @@ const dxf = createInnerFoldDesign({
   heightInMm: 40,
   mountingHoleCount: 5,
   mountingHoleDiameterInMm: 8,
-})
+}
 
+const dxf = createInnerFoldDxf(innerFoldDesignOptions)
 const dxfString = dxf.stringify()
 const dxfPath = './build.dxf'
-
 writeFile(dxfPath, dxfString)
 
 const helper = new DxfHelper(dxfString)
@@ -44,6 +46,9 @@ const svgString = helper.toSVG()
     'width="100%" height="100%" style="background-color: white;"',
   )
 const svgPath = './build.svg'
-
 writeFile(svgPath, svgString)
 
+const scad = createInnerFoldScad(innerFoldDesignOptions)
+const scadBuffer = stl.serialize({ binary: true }, scad)
+const scadPath = './build.stl'
+writeFile(scadPath, scadBuffer)
