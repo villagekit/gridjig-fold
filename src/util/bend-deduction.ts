@@ -1,4 +1,5 @@
 import { getBendAllowance } from './bend-allowance'
+import { getOutsideSetback } from './outside-setback'
 
 // bend deduction
 //
@@ -20,10 +21,17 @@ export function getBendDeduction(options: BendDeductionOptions) {
     kFactor
   } = options
   
-  const bendAngleInRadians = 2 * Math.PI * bendAngle
-
-  const outsideSetback = Math.tan(bendAngleInRadians / 2) * (insideRadius + materialThickness)
-  const bendAllowance = getBendAllowance(options)
+  const outsideSetback = getOutsideSetback({
+    materialThickness,
+    bendAngle,
+    insideRadius,
+  })
+  const bendAllowance = getBendAllowance({
+    materialThickness,
+    bendAngle,
+    insideRadius,
+    kFactor,
+  })
 
   return 2 * outsideSetback - bendAllowance
 }
