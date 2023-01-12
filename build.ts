@@ -24,8 +24,10 @@ const dxf = createInnerFoldDesign({
   ...gridOptions,
   ...foldOptions,
   lengthInGridUnits: 20,
-  widthInMm: 20,
+  widthInMm: 40,
   heightInMm: 40,
+  mountingHoleCount: 5,
+  mountingHoleDiameterInMm: 8,
 })
 
 const string = dxf.stringify()
