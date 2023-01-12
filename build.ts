@@ -8,10 +8,18 @@ const gridOptions: GridOptions = {
   holeDiameterInMm: 8,
 }
 
+// https://onestopcuttingshop.co.nz/folding
+
 const foldOptions: FoldOptions = {
-  kFactor: 0.5,
-  materialThickness: 10,
+  materialThickness: 6,
+  insideRadius: 6.5,
+  kFactor: 0.36,
 }
+
+// data sheet:
+// - bend allowance : 5.65
+//
+// NOTE (mw): why does this not match what we calculate?
 
 const dxf = createInnerFoldDesign({
   ...gridOptions,
