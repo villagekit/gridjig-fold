@@ -3,9 +3,14 @@ import { booleans, extrusions, expansions, geometries, hulls, maths, primitives,
 
 import { InnerFoldDesignOptions } from './types'
 import { getBendAllowance, getBendDeduction } from './util'
+import { innerFoldDesignOptions } from '../build-options'
 
 const INF = 10000
 const ROT = 2 * Math.PI
+
+export function main() {
+  return createInnerFoldScad(innerFoldDesignOptions)
+}
 
 export function createInnerFoldScad(options: InnerFoldDesignOptions): Geom3 {
   const {
