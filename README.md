@@ -2,20 +2,20 @@
 
 ## fold
 
-- [`fold.stl`](./outputs/fold.stl)
+- [`fold.stl`](./build/fold.stl)
 
-![](./outputs/fold.stl.png)
+![](./build/fold.stl.png)
 
-- [`fold.dxf`](./outputs/fold.dxf)
+- [`fold.dxf`](./build/fold.dxf)
 
-![](./outputs/fold.dxf.svg)
+![](./build/fold.dxf.svg)
 
 ## table
 
-- [`table.stl`](./outputs/table.stl)
+- [`table.stl`](./build/table.stl)
 
-![](./outputs/table.stl.png)
+![](./build/table.stl.png)
 
-- [`table.dxf`](./outputs/table.dxf)
+- [`table.dxf`](./build/table.dxf)
 
-![](./outputs/table.dxf.svg)
+![](./build/table.dxf.svg)
