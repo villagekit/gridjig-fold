@@ -8,13 +8,13 @@ const gridOptions: GridOptions = {
 // https://onestopcuttingshop.co.nz/folding
 
 const foldOptions: FoldOptions = {
-  materialThickness: 6,
-  insideRadius: 6.5,
-  kFactor: 0.36,
+  materialThickness: 2,
+  insideRadius: 2,
+  kFactor: 0.28,
 }
 
 // data sheet:
-// - bend allowance : 5.65
+// - bend allowance : 1.97
 //
 // NOTE (mw): why does this not match what we calculate?
 
@@ -22,8 +22,8 @@ export const innerFoldDesignOptions = {
   ...gridOptions,
   ...foldOptions,
   lengthInGridUnits: 20,
-  widthInMm: 40,
-  heightInMm: 40,
+  widthInMm: 20,
+  heightInMm: 30,
   mountingHoleCount: 5,
-  mountingHoleDiameterInMm: 8,
+  mountingHoleDiameterInMm: 5,
 }
