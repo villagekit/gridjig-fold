@@ -1,9 +1,21 @@
 # gridjig-fold
 
-- [`build.stl`](./build.stl)
+## fold
 
-![](./build.stl.png)
+- [`fold.stl`](./outputs/fold.stl)
 
-- [`build.dxf`](./build.dxf)
+![](./outputs/fold.stl.png)
 
-![](./build.dxf.svg)
+- [`fold.dxf`](./outputs/fold.dxf)
+
+![](./outputs/fold.dxf.svg)
+
+## table
+
+- [`table.stl`](./outputs/table.stl)
+
+![](./outputs/table.stl.png)
+
+- [`table.dxf`](./outputs/table.dxf)
+
+![](./outputs/table.dxf.svg)

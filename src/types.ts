@@ -9,10 +9,19 @@ export interface FoldOptions {
   kFactor: number
 }
 
-export interface InnerFoldDesignOptions extends GridOptions, FoldOptions {
+export interface FoldDesignOptions extends GridOptions, FoldOptions {
   lengthInGridUnits: number
   widthInMm: number
   heightInMm: number
+  mountingHoleCount: number
+  mountingHoleDiameterInMm: number
+}
+
+export interface TableDesignOptions extends GridOptions {
+  materialThickness: number
+  lengthInGridUnits: number
+  sideWidthInMm: number
+  midWidthInMm: number
   mountingHoleCount: number
   mountingHoleDiameterInMm: number
 }

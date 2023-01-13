@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
-    "build": "ts-node build.ts",
-    "dev:scad": "jscad-now ./src/scad.ts",
+    "build": "ts-node src/build.ts",
+    "dev:scad:fold": "jscad-now ./src/scad/fold.ts",
+    "dev:scad:table": "jscad-now ./src/scad/table.ts",
     "test": "jest"
   },
   "repository": {

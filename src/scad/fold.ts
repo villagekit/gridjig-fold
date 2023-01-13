@@ -1,18 +1,18 @@
 import type { Geom3, Geom2 } from '@jscad/modeling/src/geometries/types'
 import { booleans, extrusions, expansions, geometries, hulls, maths, primitives, transforms } from '@jscad/modeling'
 
-import { InnerFoldDesignOptions } from './types'
-import { getBendAllowance, getBendDeduction } from './util'
-import { innerFoldDesignOptions } from '../build-options'
+import { FoldDesignOptions } from '../types'
+import { getBendAllowance, getBendDeduction } from '../util'
+import { designs } from '../designs'
 
 const INF = 10000
 const ROT = 2 * Math.PI
 
 export function main() {
-  return createInnerFoldScad(innerFoldDesignOptions)
+  return createFoldScad(designs.fold.options)
 }
 
-export function createInnerFoldScad(options: InnerFoldDesignOptions) {
+export function createFoldScad(options: FoldDesignOptions) {
   const {
     gridUnitInMm,
     holeDiameterInMm,
@@ -45,15 +45,15 @@ export function createInnerFoldScad(options: InnerFoldDesignOptions) {
   return booleans.union(
     booleans.subtract(
       booleans.union(
-        createInnerFoldWidth(),
-        createInnerFoldHeight(),
+        createFoldWidth(),
+        createFoldHeight(),
       ),
-      createInnerFoldCurveCut(),
+      createFoldCurveCut(),
     ),
-    createInnerFoldCurve(),
+    createFoldCurve(),
   )
 
-  function createInnerFoldWidth(): Geom3 {
+  function createFoldWidth(): Geom3 {
     const holes: Array<Geom2> = []
     for (let holeIndex = 0; holeIndex < mountingHoleCount - 1; holeIndex++) {
       holes.push(
@@ -99,7 +99,7 @@ export function createInnerFoldScad(options: InnerFoldDesignOptions) {
     )
   }
 
-  function createInnerFoldHeight() {
+  function createFoldHeight() {
     const holes: Array<Geom2> = []
     for (let holeIndex = 0; holeIndex < lengthInGridUnits; holeIndex++) {
       holes.push(
@@ -148,7 +148,7 @@ export function createInnerFoldScad(options: InnerFoldDesignOptions) {
     )
   }
 
-  function createInnerFoldCurveCut() {
+  function createFoldCurveCut() {
     return primitives.cuboid({
       center: [
         (1/2) * sheetLength,
@@ -163,7 +163,7 @@ export function createInnerFoldScad(options: InnerFoldDesignOptions) {
     })
   }
 
-  function createInnerFoldCurve() {
+  function createFoldCurve() {
     const insideArc = primitives.arc({
       radius: insideRadius,
       startAngle: 0,
